@@ -118,12 +118,18 @@ for epoch in range(start_epoch, opt.OPTIM.NUM_EPOCHS + 1):
         restored = model_restoration(input_)
  
         # Compute loss at each stage
+
         # loss_char = np.sum([criterion_char(restored[j],target) for j in range(len(restored))])
+        loss_char = sum([criterion_char(restored[j], target) for j in range(len(restored))])
+
         # loss_edge = np.sum([criterion_edge(restored[j],target) for j in range(len(restored))])
-        # loss = (loss_char) + (0.05*loss_edge)
-        loss_char = torch.tensor([criterion_char(restored[j], target) for j in range(len(restored))]).sum()
-        loss_edge = torch.tensor([criterion_edge(restored[j], target) for j in range(len(restored))]).sum()
-        loss = ((loss_char) + (0.05 * loss_edge)).requires_grad_(True)
+        loss_edge = sum([criterion_edge(restored[j], target) for j in range(len(restored))])
+        loss = (loss_char) + (0.05*loss_edge)
+
+        #############
+        # loss_char = torch.tensor([criterion_char(restored[j], target) for j in range(len(restored))]).sum()
+        # loss_edge = torch.tensor([criterion_edge(restored[j], target) for j in range(len(restored))]).sum()
+        # loss = ((loss_char) + (0.05 * loss_edge)).requires_grad_(True)
 
         loss.backward()
         optimizer.step()
@@ -159,7 +165,7 @@ for epoch in range(start_epoch, opt.OPTIM.NUM_EPOCHS + 1):
         torch.save({'epoch': epoch, 
                     'state_dict': model_restoration.state_dict(),
                     'optimizer' : optimizer.state_dict()
-                    }, os.path.join(model_dir,f"model_epoch_{epoch}.pth")) 
+                    }, os.path.join(model_dir,f"model_epoch_{epoch}.pth"))
 
     scheduler.step()
     
