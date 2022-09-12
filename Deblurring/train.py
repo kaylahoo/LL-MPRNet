@@ -179,5 +179,3 @@ for epoch in range(start_epoch, opt.OPTIM.NUM_EPOCHS + 1):
                 }, os.path.join(model_dir,"model_latest.pth"))
 
 
-    #####kdjjjd
-
