@@ -68,7 +68,7 @@ scheduler.step()
 ######### Resume ###########
 if opt.TRAINING.RESUME:
     # path_chk_rest    = utils.get_last_path(model_dir, '_latest.pth')
-    path_chk_rest    = utils.get_last_path(model_dir, '_epoch_80.pth')
+    path_chk_rest    = utils.get_last_path(model_dir, '_epoch_400.pth')
 
     utils.load_checkpoint(model_restoration,path_chk_rest)
     start_epoch = utils.load_start_epoch(path_chk_rest) + 1
